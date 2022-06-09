@@ -212,6 +212,52 @@ TEST_CASE( "date date::operator-=( int day )" )
     REQUIRE( ( date { 24 , 8 , 2022 } -= -95332 ) == date { 28 , 8  , 2283 } );
 }
 
+TEST_CASE( "date& date::operator++()" )
+{
+    using namespace project;
+
+    REQUIRE( ++date { 1  , 1  , 2000 } == date { 2 , 1 , 2000 } );
+    REQUIRE( ++date { 31 , 1  , 2000 } == date { 1 , 2 , 2000 } );
+    REQUIRE( ++date { 31 , 12 , 2000 } == date { 1 , 1 , 2001 } );
+}
+
+TEST_CASE( "date& date::operator++( int )" )
+{
+    using namespace project;
+
+    date temp;
+
+    REQUIRE( ( temp = date { 1  , 1  , 2000 } , temp++ ) == date { 1 , 1 , 2000 } );
+    REQUIRE( temp == date { 2 , 1 , 2000 } );
+    REQUIRE( ( temp = date { 31 , 1  , 2000 } , temp++ ) == date { 31 , 1 , 2000 } );
+    REQUIRE( temp == date { 1 , 2 , 2000 } );
+    REQUIRE( ( temp = date { 31 , 12 , 2000 } , temp++ ) == date { 31 , 12 , 2000 } );
+    REQUIRE( temp == date { 1 , 1 , 2001 } );
+}
+
+TEST_CASE( "date& date::operator--()" )
+{
+    using namespace project;
+
+    REQUIRE( --date { 2 , 1 , 2000 } == date { 1  , 1  , 2000 } );
+    REQUIRE( --date { 1 , 2 , 2000 } == date { 31 , 1  , 2000 } );
+    REQUIRE( --date { 1 , 1 , 2001 } == date { 31 , 12 , 2000 } );
+}
+
+TEST_CASE( "date& date::operator--( int )" )
+{
+    using namespace project;
+
+    date temp;
+
+    REQUIRE( ( temp = date { 2 , 1 , 2000 } , temp-- ) == date { 2 , 1 , 2000 } );
+    REQUIRE( temp == date { 1 , 1 , 2000 } );
+    REQUIRE( ( temp = date { 1 , 2 , 2000 } , temp-- ) == date { 1 , 2 , 2000 } );
+    REQUIRE( temp == date { 31 , 1  , 2000 } );
+    REQUIRE( ( temp = date { 1 , 1 , 2001 } , temp-- ) == date { 1 , 1 , 2001 } );
+    REQUIRE( temp == date { 31 , 12 , 2000 } );
+}
+
 TEST_CASE( "operator<( const date& x , const date& y )" )
 {
     project::date x  { 8 , 6 , 2022 };

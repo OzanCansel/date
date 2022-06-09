@@ -275,6 +275,34 @@ inline date& date::operator-=( int day )
     return operator+=( -day );
 }
 
+inline date& date::operator++()
+{
+    return operator+=( 1 );
+}
+
+inline date date::operator++( int )
+{
+    date curr { *this };
+
+    operator++();
+
+    return curr;
+}
+
+inline date& date::operator--()
+{
+    return operator-=( 1 );
+}
+
+inline date date::operator--( int )
+{
+    date curr { *this };
+
+    operator--();
+
+    return curr;
+}
+
 inline int date::n_days( int month , int year ) const
 {
     assert( month > 0 && month <= 12 );
