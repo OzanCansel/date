@@ -1,0 +1,218 @@
+#define CATCH_CONFIG_MAIN
+#include "catch.hpp"
+#include "date.hpp"
+
+TEST_CASE( "date::is_leap( int year )" )
+{
+    REQUIRE( !project::date::is_leap( 2001 ) );
+    REQUIRE(  project::date::is_leap( 2000 ) );
+}
+
+TEST_CASE( "date::date()" )
+{
+    project::date d;
+
+    REQUIRE( d.year()      == 1900 );
+    REQUIRE( d.month()     == 1    );
+    REQUIRE( d.month_day() == 1    );
+}
+
+TEST_CASE( "date::date( int , int , int )" )
+{
+    project::date d { 5 , 6 , 2000 };
+
+    REQUIRE( d.month_day() == 5    );
+    REQUIRE( d.month()     == 6    );
+    REQUIRE( d.year()      == 2000 );
+}
+
+TEST_CASE( "date::date( std::string_view )" )
+{
+    project::date d { "15/05/2022" };
+
+    REQUIRE( d.month_day() == 15   );
+    REQUIRE( d.month()     == 5    );
+    REQUIRE( d.year()      == 2022 );
+}
+
+TEST_CASE( "date::date( std::time_t )" )
+{
+    std::time_t current;
+    std::time( &current );
+
+    std::tm* timeinfo = std::localtime( &current );
+
+    timeinfo->tm_year = 120;
+    timeinfo->tm_mon  = 1;
+    timeinfo->tm_mday = 15;
+
+    auto time = std::mktime( timeinfo );
+
+    project::date d { time };
+
+    REQUIRE( d.year()      == 2020 );
+    REQUIRE( d.month()     == 2    );
+    REQUIRE( d.month_day() == 15   );
+}
+
+TEST_CASE( "int date::year_day() const" )
+{
+    project::date x1 { 9 , 6 , 2022 };
+    project::date x2 { 9 , 6 , 2000 };
+    project::date x3 { 9 , 2 , 2000 };
+    project::date x4 { 9 , 1 , 2005 };
+
+    REQUIRE( x1.year_day() == 160 );
+    REQUIRE( x2.year_day() == 161 );
+    REQUIRE( x3.year_day() == 40  );
+    REQUIRE( x4.year_day() == 9   );
+}
+
+TEST_CASE( "day date::week_day() const" )
+{
+    project::date x1 { 11 , 2  , 1978 };
+    project::date x2 { 9  , 6  , 2022 };
+    project::date x3 { 4  , 11 , 2001 };
+    project::date x4 { 17 , 8  , 2564 };
+
+    REQUIRE( x1.week_day() == project::date::day::saturday );
+    REQUIRE( x2.week_day() == project::date::day::thursday );
+    REQUIRE( x3.week_day() == project::date::day::sunday   );
+    REQUIRE( x4.week_day() == project::date::day::friday   );
+}
+
+TEST_CASE( "date& date::set_month_day( int )" )
+{
+    project::date x1 { 11 , 2 , 1978 };
+    project::date x2 { 11 , 2 , 2000 };
+
+    x1.set_month_day( 24 );
+    x2.set_month_day( 29 );
+
+    REQUIRE( x1.month_day() == 24 );
+    REQUIRE( x2.month_day() == 29 );
+}
+
+TEST_CASE( "date& date::set_month( int )" )
+{
+    project::date x { 11 , 2 , 1978 };
+
+    x.set_month( 5 );
+
+    REQUIRE( x.month() == 5 );
+}
+
+TEST_CASE( "date& date::set_year( int )" )
+{
+    project::date x { 11 , 2 , 1978 };
+
+    x.set_year( 2005 );
+
+    REQUIRE( x.year() == 2005 );
+}
+
+TEST_CASE( "date& date::set( int day , int month , int year )" )
+{
+    project::date x { 11 , 2 , 1978 };
+
+    x.set( 12 , 3 , 1979 );
+
+    REQUIRE( x.month_day() == 12   );
+    REQUIRE( x.month()     == 3    );
+    REQUIRE( x.year()      == 1979 );
+}
+
+TEST_CASE( "date date::operator+( int day )" )
+{
+    project::date x1  { 1  , 1 , 2000 };
+    project::date x2  { 24 , 8 , 2022 };
+    project::date y11 { x1 + 366    };
+    project::date y21 { x1 + 4565   };
+    project::date y31 { x1 + 5      };
+    project::date y41 { x1 + 25     };
+    project::date y51 { x1 + 97     };
+    project::date y61 { x1 + 1      };
+    project::date y71 { x1 + 0      };
+    project::date y81 { x1 + -1     };
+    project::date y91 { x1 + -55    };
+    project::date y12 { x2 + 95332  };
+
+    REQUIRE( y11 == project::date { 1  , 1  , 2001 } );
+    REQUIRE( y21 == project::date { 1  , 7  , 2012 } );
+    REQUIRE( y31 == project::date { 6  , 1  , 2000 } );
+    REQUIRE( y41 == project::date { 26 , 1  , 2000 } );
+    REQUIRE( y51 == project::date { 7  , 4  , 2000 } );
+    REQUIRE( y61 == project::date { 2  , 1  , 2000 } );
+    REQUIRE( y71 == project::date { 1  , 1  , 2000 } );
+    REQUIRE( y81 == project::date { 31 , 12 , 1999 } );
+    REQUIRE( y91 == project::date { 7  , 11 , 1999 } );
+    REQUIRE( y12 == project::date { 28 , 8  , 2283 } );
+}
+
+TEST_CASE( "operator<( const date& x , const date& y )" )
+{
+    project::date x  { 8 , 6 , 2022 };
+    project::date y1 { 9 , 6 , 2022 };
+    project::date y2 { 8 , 7 , 2022 };
+    project::date y3 { 8 , 6 , 2023 };
+
+    REQUIRE( x < y1 );
+    REQUIRE( x < y2 );
+    REQUIRE( x < y3 );
+}
+
+TEST_CASE( "operator<=( const date& x , const date& y )" )
+{
+    project::date x  { 8 , 6 , 2022 };
+    project::date y1 { 9 , 6 , 2022 };
+    project::date y2 { 8 , 7 , 2022 };
+    project::date y3 { 8 , 6 , 2023 };
+    project::date y4 { 8 , 6 , 2022 };
+
+    REQUIRE( x <= y1 );
+    REQUIRE( x <= y2 );
+    REQUIRE( x <= y3 );
+    REQUIRE( x <= y4 );
+}
+
+TEST_CASE( "operator>( const date& x , const date& y )" )
+{
+    project::date x  { 8 , 6 , 2022 };
+    project::date y1 { 9 , 6 , 2022 };
+    project::date y2 { 8 , 7 , 2022 };
+    project::date y3 { 8 , 6 , 2023 };
+
+    REQUIRE( y1 > x );
+    REQUIRE( y2 > x );
+    REQUIRE( y3 > x );
+}
+
+TEST_CASE( "operator>=( const date& x , const date& y )" )
+{
+    project::date x  { 8 , 6 , 2022 };
+    project::date y1 { 9 , 6 , 2022 };
+    project::date y2 { 8 , 7 , 2022 };
+    project::date y3 { 8 , 6 , 2023 };
+    project::date y4 { 8 , 6 , 2022 };
+
+    REQUIRE( y1 >= x );
+    REQUIRE( y2 >= x );
+    REQUIRE( y3 >= x );
+    REQUIRE( y4 >= x );
+}
+
+TEST_CASE( "operator==( const date& x , const date& y  )" )
+{
+    project::date x { 8 , 6 , 2022 };
+    project::date y { 8 , 6 , 2022 };
+
+    REQUIRE( x == y );
+}
+
+TEST_CASE( "operator!=( const date& x , const date& y )" )
+{
+    project::date x { 8 , 6 , 2022 };
+    project::date y { 9 , 6 , 2022 };
+
+    REQUIRE( x != y );
+}
