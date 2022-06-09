@@ -124,29 +124,92 @@ TEST_CASE( "date& date::set( int day , int month , int year )" )
 
 TEST_CASE( "date date::operator+( int day )" )
 {
-    project::date x1  { 1  , 1 , 2000 };
-    project::date x2  { 24 , 8 , 2022 };
-    project::date y11 { x1 + 366    };
-    project::date y21 { x1 + 4565   };
-    project::date y31 { x1 + 5      };
-    project::date y41 { x1 + 25     };
-    project::date y51 { x1 + 97     };
-    project::date y61 { x1 + 1      };
-    project::date y71 { x1 + 0      };
-    project::date y81 { x1 + -1     };
-    project::date y91 { x1 + -55    };
-    project::date y12 { x2 + 95332  };
+    using namespace project;
 
-    REQUIRE( y11 == project::date { 1  , 1  , 2001 } );
-    REQUIRE( y21 == project::date { 1  , 7  , 2012 } );
-    REQUIRE( y31 == project::date { 6  , 1  , 2000 } );
-    REQUIRE( y41 == project::date { 26 , 1  , 2000 } );
-    REQUIRE( y51 == project::date { 7  , 4  , 2000 } );
-    REQUIRE( y61 == project::date { 2  , 1  , 2000 } );
-    REQUIRE( y71 == project::date { 1  , 1  , 2000 } );
-    REQUIRE( y81 == project::date { 31 , 12 , 1999 } );
-    REQUIRE( y91 == project::date { 7  , 11 , 1999 } );
-    REQUIRE( y12 == project::date { 28 , 8  , 2283 } );
+    date x1  { 1  , 1 , 2000 };
+    date x2  { 24 , 8 , 2022 };
+    date y11 { x1 + 366    };
+    date y21 { x1 + 4565   };
+    date y31 { x1 + 5      };
+    date y41 { x1 + 25     };
+    date y51 { x1 + 97     };
+    date y61 { x1 + 1      };
+    date y71 { x1 + 0      };
+    date y81 { x1 + -1     };
+    date y91 { x1 + -55    };
+    date y12 { x2 + 95332  };
+
+    REQUIRE( y11 == date { 1  , 1  , 2001 } );
+    REQUIRE( y21 == date { 1  , 7  , 2012 } );
+    REQUIRE( y31 == date { 6  , 1  , 2000 } );
+    REQUIRE( y41 == date { 26 , 1  , 2000 } );
+    REQUIRE( y51 == date { 7  , 4  , 2000 } );
+    REQUIRE( y61 == date { 2  , 1  , 2000 } );
+    REQUIRE( y71 == date { 1  , 1  , 2000 } );
+    REQUIRE( y81 == date { 31 , 12 , 1999 } );
+    REQUIRE( y91 == date { 7  , 11 , 1999 } );
+    REQUIRE( y12 == date { 28 , 8  , 2283 } );
+}
+
+TEST_CASE( "date date::operator+=( int day )" )
+{
+    using namespace project;
+
+    REQUIRE( ( date { 1  , 1 , 2000 } += 366   ) == date { 1  , 1  , 2001 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } += 4565  ) == date { 1  , 7  , 2012 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } += 5     ) == date { 6  , 1  , 2000 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } += 25    ) == date { 26 , 1  , 2000 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } += 97    ) == date { 7  , 4  , 2000 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } += 1     ) == date { 2  , 1  , 2000 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } += 0     ) == date { 1  , 1  , 2000 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } += -1    ) == date { 31 , 12 , 1999 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } += -55   ) == date { 7  , 11 , 1999 } );
+    REQUIRE( ( date { 24 , 8 , 2022 } += 95332 ) == date { 28 , 8  , 2283 } );
+}
+
+TEST_CASE( "date date::operator-( int day )" )
+{
+    using namespace project;
+
+    date x1  { 1  , 1 , 2000 };
+    date x2  { 24 , 8 , 2022 };
+    date y11 { x1 - ( -366   ) };
+    date y21 { x1 - ( -4565  ) };
+    date y31 { x1 - ( -5     ) };
+    date y41 { x1 - ( -25    ) };
+    date y51 { x1 - ( -97    ) };
+    date y61 { x1 - ( -1     ) };
+    date y71 { x1 - ( -0     ) };
+    date y81 { x1 - ( +1     ) };
+    date y91 { x1 - ( +55    ) };
+    date y12 { x2 - ( -95332 ) };
+
+    REQUIRE( y11 == date { 1  , 1  , 2001 } );
+    REQUIRE( y21 == date { 1  , 7  , 2012 } );
+    REQUIRE( y31 == date { 6  , 1  , 2000 } );
+    REQUIRE( y41 == date { 26 , 1  , 2000 } );
+    REQUIRE( y51 == date { 7  , 4  , 2000 } );
+    REQUIRE( y61 == date { 2  , 1  , 2000 } );
+    REQUIRE( y71 == date { 1  , 1  , 2000 } );
+    REQUIRE( y81 == date { 31 , 12 , 1999 } );
+    REQUIRE( y91 == date { 7  , 11 , 1999 } );
+    REQUIRE( y12 == date { 28 , 8  , 2283 } );
+}
+
+TEST_CASE( "date date::operator-=( int day )" )
+{
+    using namespace project;
+
+    REQUIRE( ( date { 1  , 1 , 2000 } -= -366   ) == date { 1  , 1  , 2001 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } -= -4565  ) == date { 1  , 7  , 2012 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } -= -5     ) == date { 6  , 1  , 2000 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } -= -25    ) == date { 26 , 1  , 2000 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } -= -97    ) == date { 7  , 4  , 2000 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } -= -1     ) == date { 2  , 1  , 2000 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } -= -0     ) == date { 1  , 1  , 2000 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } -= +1     ) == date { 31 , 12 , 1999 } );
+    REQUIRE( ( date { 1  , 1 , 2000 } -= +55    ) == date { 7  , 11 , 1999 } );
+    REQUIRE( ( date { 24 , 8 , 2022 } -= -95332 ) == date { 28 , 8  , 2283 } );
 }
 
 TEST_CASE( "operator<( const date& x , const date& y )" )

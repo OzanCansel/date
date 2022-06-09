@@ -49,9 +49,9 @@ public:
     date& set_year( int );
     date& set( int day , int month , int year );
 
-    date  operator+ ( int day );
+    date  operator+ ( int day ) const;
     date& operator+=( int day );
-    date  operator- ( int day );
+    date  operator- ( int day ) const;
     date& operator-=( int day );
     date& operator++();
     date  operator++( int );
@@ -229,7 +229,19 @@ inline date& date::set( int day , int month , int year )
     return *this;
 }
 
-inline date date::operator+( int day )
+inline date date::operator+( int day ) const
+{
+    if ( !day )
+        return *this;
+
+    date target_date { *this };
+
+    target_date += day;
+
+    return target_date;
+}
+
+inline date& date::operator+=( int day )
 {
     if ( !day )
         return *this;
@@ -246,7 +258,21 @@ inline date date::operator+( int day )
             surplus_days -= n_days( target_month , target_year ) , ++target_month
         );
 
-    return date { surplus_days + 1 , target_month , target_year };
+    m_day   = surplus_days + 1;
+    m_month = target_month;
+    m_year  = target_year;
+
+    return *this;
+}
+
+inline date date::operator-( int day ) const
+{
+    return operator+( -day );
+}
+
+inline date& date::operator-=( int day )
+{
+    return operator+=( -day );
 }
 
 inline int date::n_days( int month , int year ) const
