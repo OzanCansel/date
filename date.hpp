@@ -385,7 +385,7 @@ void date::validate_month( int month ) const
 
 void date::validate_year( int year ) const
 {
-    assert( year  > 1900 );
+    assert( year > 1900 );
 }
 
 inline bool operator<( const date& x , const date& y )
