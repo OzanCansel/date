@@ -36,6 +36,7 @@ public:
     };
 
     static inline date random();
+    [[nodiscard]] static inline int days_from_0( int year );
     static constexpr bool is_leap( int year );
 
     inline date();
@@ -65,7 +66,6 @@ public:
     friend bool operator< ( const date& , const date& );
     friend std::ostream& operator<<( std::ostream& os , const date& );
     friend std::istream& operator>>( std::istream& is ,       date& );
-    [[nodiscard]] static inline int days_from_0( int year );
 
 private:
 
