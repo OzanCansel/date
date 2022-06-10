@@ -386,3 +386,47 @@ TEST_CASE( "date operator+( int n , const date& )" )
 
     REQUIRE( 5 + date { 1 , 10 , 2000 } == date { 6 , 10 , 2000 } );
 }
+
+TEST_CASE( "date::day& operator++( date::day& )" )
+{
+    using namespace project;
+
+    auto day { date::day::saturday };
+
+    REQUIRE( ++day == date::day::sunday );
+    REQUIRE( ++day == date::day::monday );
+    REQUIRE( day   == date::day::monday );
+}
+
+TEST_CASE( "date::day operator++( date::day& , int )" )
+{
+    using namespace project;
+
+    auto day { date::day::saturday };
+
+    REQUIRE( day++ == date::day::saturday );
+    REQUIRE( day++ == date::day::sunday   );
+    REQUIRE( day   == date::day::monday   );
+}
+
+TEST_CASE( "date::day& operator--( date::day& )" )
+{
+    using namespace project;
+
+    auto day { date::day::sunday };
+
+    REQUIRE( --day == date::day::saturday );
+    REQUIRE( --day == date::day::friday   );
+    REQUIRE( day   == date::day::friday   );
+}
+
+TEST_CASE( "date::day operator--( date::day& , int )" )
+{
+    using namespace project;
+
+    auto day { date::day::sunday };
+
+    REQUIRE( day-- == date::day::sunday   );
+    REQUIRE( day-- == date::day::saturday );
+    REQUIRE( day   == date::day::friday   );
+}

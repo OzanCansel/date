@@ -436,6 +436,38 @@ inline date operator+( int n , const date& x )
     return x.operator+( n );
 }
 
+inline date::day& operator++( date::day& d )
+{
+    return d = date::day(
+        ( int( d ) + 1 ) % 7
+    );
+}
+
+inline date::day operator++( date::day& d , int )
+{
+    date::day x { d };
+
+    ++d;
+
+    return x;
+}
+
+inline date::day& operator--( date::day& d )
+{
+    return d = date::day(
+        ( int( d ) + 6 ) % 7
+    );
+}
+
+inline date::day operator--( date::day& d , int )
+{
+    date::day x { d };
+
+    --d;
+
+    return x;
+}
+
 inline std::ostream& operator<<( std::ostream& os , const date& d )
 {
     return os << std::setfill( '0' ) << std::setw( 2 )
