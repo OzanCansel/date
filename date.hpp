@@ -369,8 +369,8 @@ date::day date::dooms_day( int year )
 
 void date::validate_day( int day ) const
 {
-    assert( day  > 0 );
-    assert( day  <= n_days( m_month , m_year ) );
+    assert( day > 0 );
+    assert( day <= n_days( m_month , m_year ) );
 }
 
 void date::validate_month( int month )
