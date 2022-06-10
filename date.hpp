@@ -329,10 +329,9 @@ date date::operator--( int )
 
 int date::n_days( int month , int year )
 {
-    assert( month > 0 && month <= 12 );
-
     switch( month )
     {
+        default : assert( month > 0 && month <= 12 );
         case 12 : return 31;
         case 11 : return 30;
         case 10 : return 31;
@@ -369,9 +368,8 @@ date::day date::anchor_day( int year )
         case 1 : return day::wednesday;
         case 2 : return day::tuesday;
         case 3 : return day::sunday;
+        default: assert( false && "No way to reach here" );
     }
-
-    assert( false && "Should not reach here" );
 }
 
 void date::validate_day( int day ) const
