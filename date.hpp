@@ -425,13 +425,13 @@ void date::validate_year( int year )
     return !( x == y );
 }
 
-inline int operator-( const date& x , const date& y )
+[[nodiscard]] inline int operator-( const date& x , const date& y )
 {
     return ( date::days_from_0( x.year() ) + x.year_day() ) -
            ( date::days_from_0( y.year() ) + y.year_day() );
 }
 
-inline date operator+( int n , const date& x )
+[[nodiscard]] inline date operator+( int n , const date& x )
 {
     return x.operator+( n );
 }
