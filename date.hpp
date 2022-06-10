@@ -258,6 +258,9 @@ inline date& date::operator+=( int day )
             surplus_days -= n_days( target_month , target_year ) , ++target_month
         );
 
+    target_year  += target_month == 13;
+    target_month  = target_month == 13 ? 1 : target_month;
+
     m_day   = surplus_days + 1;
     m_month = target_month;
     m_year  = target_year;
