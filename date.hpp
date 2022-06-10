@@ -345,7 +345,7 @@ int date::n_days( int month , int year )
 
 constexpr int date::days_since_111( int year )
 {
-    year -= 1;
+    --year;
     return year * 365 + year / 400 - year / 100 + year / 4;
 }
 
