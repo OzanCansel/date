@@ -1,6 +1,7 @@
 #define CATCH_CONFIG_MAIN
 #include "catch.hpp"
 #include "date.hpp"
+#include <sstream>
 
 TEST_CASE( "date::is_leap( int year )" )
 {
@@ -324,4 +325,34 @@ TEST_CASE( "operator!=( const date& x , const date& y )" )
     project::date y { 9 , 6 , 2022 };
 
     REQUIRE( x != y );
+}
+
+TEST_CASE( "std::ostream& operator<<( std::ostream& os , const date& )" )
+{
+    std::stringstream ss1;
+    std::stringstream ss2;
+
+    project::date x1 { 21 , 8 , 2022 };
+    project::date x2 { 21 , 8 , 20223 };
+
+    ss1 << x1;
+    ss2 << x2;
+
+    REQUIRE( ss1.str() == "21/08/2022"  );
+    REQUIRE( ss2.str() == "21/08/20223" );
+}
+
+TEST_CASE( "std::ostream& operator>>( std::ostream& os , date& )" )
+{
+    std::stringstream ss1 , ss2;
+
+    project::date x1 , x2;
+
+    ss1 << "21/08/2022";
+    ss1 >> x1;
+    ss2 << "21/08/20223";
+    ss2 >> x2;
+
+    REQUIRE( x1 == project::date { 21 , 8 , 2022  } );
+    REQUIRE( x2 == project::date { 21 , 8 , 20223 } );
 }

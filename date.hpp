@@ -409,13 +409,37 @@ inline bool operator!=( const date& x , const date& y )
     return !( x == y );
 }
 
-inline std::ostream& operator<<( std::ostream& os , const date& )
+inline std::ostream& operator<<( std::ostream& os , const date& d )
 {
-    return os;
+    return os << std::setfill( '0' ) << std::setw( 2 )
+              << d.month_day()
+              << '/'
+              << std::setfill( '0' ) << std::setw( 2 )
+              << d.month()
+              << '/'
+              << d.year();
 }
 
-inline std::istream& operator>>( std::istream& is , date& )
+inline std::istream& operator>>( std::istream& is , date& d )
 {
+    std::string date_str;
+
+    is >> date_str;
+
+    auto day = std::stoi( date_str.substr( 0 , 2 ) );
+
+    d.set_month(
+        std::stoi(
+            date_str.substr( 3 , 2 )
+        )
+    );
+    d.set_year(
+        std::stoi(
+            date_str.substr( 6 )
+        )
+    );
+    d.set_month_day( day );
+
     return is;
 }
 
