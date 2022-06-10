@@ -36,9 +36,9 @@ public:
         saturday
     };
 
-    static inline date random();
+    [[nodiscard]] static inline date random();
     [[nodiscard]] static constexpr int days_since_111( int year );
-    static constexpr bool is_leap( int year );
+    [[nodiscard]] static constexpr bool is_leap( int year );
 
     inline date();
     inline date( int day , int month , int year );
