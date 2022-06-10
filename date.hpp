@@ -356,7 +356,7 @@ int date::year_from_days( int days )
 
 date::day date::dooms_day( int year )
 {
-    auto century = ( ( year - 200 ) % 400 / 100 );
+    int century { ( year - 200 ) % 400 / 100 };
 
     switch( century )
     {
