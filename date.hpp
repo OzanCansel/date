@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef DATE_H
+#define DATE_H
+
 #include <iosfwd>
 #include <ctime>
 #include <tuple>
@@ -462,3 +465,5 @@ inline std::istream& operator>>( std::istream& is , date& d )
 }
 
 }
+
+#endif
