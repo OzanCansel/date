@@ -71,9 +71,9 @@ private:
     [[nodiscard]] static inline int days_from_0( int year );
     [[nodiscard]] static inline int year_from_days( int days );
     [[nodiscard]] static inline day anchor_day( int year );
-    void validate_day( int ) const;
-    void validate_month( int ) const;
-    void validate_year( int ) const;
+    inline void validate_day( int ) const;
+    inline void validate_month( int ) const;
+    inline void validate_year( int ) const;
 
     int m_day;
     int m_month;
