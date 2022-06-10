@@ -400,7 +400,7 @@ TEST_CASE( "date::day& operator++( date::day& )" )
 
     REQUIRE( ++day == date::day::sunday );
     REQUIRE( ++day == date::day::monday );
-    REQUIRE( day   == date::day::monday );
+    REQUIRE(   day == date::day::monday );
 }
 
 TEST_CASE( "date::day operator++( date::day& , int )" )
@@ -422,7 +422,7 @@ TEST_CASE( "date::day& operator--( date::day& )" )
 
     REQUIRE( --day == date::day::saturday );
     REQUIRE( --day == date::day::friday   );
-    REQUIRE( day   == date::day::friday   );
+    REQUIRE(   day == date::day::friday   );
 }
 
 TEST_CASE( "date::day operator--( date::day& , int )" )
