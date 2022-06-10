@@ -63,8 +63,6 @@ public:
     inline date  operator--( int );
     
     friend bool operator< ( const date& , const date& );
-    friend bool operator==( const date& , const date& );
-    friend bool operator!=( const date& , const date& );
     friend std::ostream& operator<<( std::ostream& os , const date& );
     friend std::istream& operator>>( std::istream& is ,       date& );
     [[nodiscard]] static inline int days_from_0( int year );
