@@ -74,9 +74,9 @@ private:
     [[nodiscard]] static inline int days_from_0( int year );
     [[nodiscard]] static inline int year_from_days( int days );
     [[nodiscard]] static inline day anchor_day( int year );
+    static inline void validate_month( int );
+    static inline void validate_year( int );
     inline void validate_day( int ) const;
-    inline void validate_month( int ) const;
-    inline void validate_year( int ) const;
 
     int m_day;
     int m_month;
@@ -377,13 +377,13 @@ void date::validate_day( int day ) const
     assert( day  <= n_days( m_month , m_year ) );
 }
 
-void date::validate_month( int month ) const
+void date::validate_month( int month )
 {
     assert( month > 0 );
     assert( month <= 12 );
 }
 
-void date::validate_year( int year ) const
+void date::validate_year( int year )
 {
     assert( year > 1900 );
 }
