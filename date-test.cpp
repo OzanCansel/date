@@ -356,3 +356,18 @@ TEST_CASE( "std::ostream& operator>>( std::ostream& os , date& )" )
     REQUIRE( x1 == project::date { 21 , 8 , 2022  } );
     REQUIRE( x2 == project::date { 21 , 8 , 20223 } );
 }
+
+TEST_CASE( "date date::random()" )
+{
+    bool correct { true };
+
+    for ( auto i = 0; i < int( 1e6 ); ++i )
+    {
+        project::date d = project::date::random();
+
+        correct = correct && d.year() >= project::date::RAND_MIN_YEAR;
+        correct = correct && d.year() <= project::date::RAND_MAX_YEAR;
+    }
+
+    REQUIRE( correct );
+}
