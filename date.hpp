@@ -425,6 +425,17 @@ void date::validate_year( int year )
     return !( x == y );
 }
 
+inline int operator-( const date& x , const date& y )
+{
+    return ( date::days_from_0( x.year() ) + x.year_day() ) -
+           ( date::days_from_0( y.year() ) + y.year_day() );
+}
+
+inline date operator+( int n , const date& x )
+{
+    return x.operator+( n );
+}
+
 inline std::ostream& operator<<( std::ostream& os , const date& d )
 {
     return os << std::setfill( '0' ) << std::setw( 2 )
@@ -457,17 +468,6 @@ inline std::istream& operator>>( std::istream& is , date& d )
     d.set_month_day( day );
 
     return is;
-}
-
-inline int operator-( const date& x , const date& y )
-{
-    return ( date::days_from_0( x.year() ) + x.year_day() ) -
-           ( date::days_from_0( y.year() ) + y.year_day() );
-}
-
-inline date operator+( int n , const date& x )
-{
-    return x.operator+( n );
 }
 
 }
