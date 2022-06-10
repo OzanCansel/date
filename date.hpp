@@ -6,6 +6,7 @@
 #include <ctime>
 #include <cassert>
 #include <iosfwd>
+#include <iomanip>
 #include <tuple>
 #include <stdexcept>
 #include <string_view>
