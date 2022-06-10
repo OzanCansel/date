@@ -142,8 +142,7 @@ date::date( std::time_t gmt )
 {
     auto tm = std::gmtime( &gmt );
 
-    if ( !tm )
-        throw std::runtime_error { "gmtime fail." };
+    assert( tm );
 
     m_year  = tm->tm_year + 1900;
     m_month = tm->tm_mon + 1;
