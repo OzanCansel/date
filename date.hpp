@@ -388,7 +388,7 @@ void date::validate_year( int year )
     assert( year > 1900 );
 }
 
-inline bool operator<( const date& x , const date& y )
+[[nodiscard]] inline bool operator<( const date& x , const date& y )
 {
     return std::tie(
         x.m_year  ,
@@ -402,27 +402,27 @@ inline bool operator<( const date& x , const date& y )
     );
 }
 
-inline bool operator<=( const date& x , const date& y )
+[[nodiscard]] inline bool operator<=( const date& x , const date& y )
 {
     return !( y < x );
 }
 
-inline bool operator>( const date& x , const date& y )
+[[nodiscard]] inline bool operator>( const date& x , const date& y )
 {
     return !( x <= y );
 }
 
-inline bool operator>=( const date& x , const date& y )
+[[nodiscard]] inline bool operator>=( const date& x , const date& y )
 {
     return !( x < y );
 }
 
-inline bool operator==( const date& x , const date& y )
+[[nodiscard]] inline bool operator==( const date& x , const date& y )
 {
     return x <= y && y <= x;
 }
 
-inline bool operator!=( const date& x , const date& y )
+[[nodiscard]] inline bool operator!=( const date& x , const date& y )
 {
     return !( x == y );
 }
