@@ -32,32 +32,32 @@ public:
         saturday
     };
 
-    static date random();
+    static inline date random();
     static constexpr bool is_leap( int year );
 
-    date();
-    date( int day , int month , int year );
-    date( std::string_view );
-    date( std::time_t );
-    [[nodiscard]] int month_day() const;
-    [[nodiscard]] int month() const;
-    [[nodiscard]] int year() const;
-    [[nodiscard]] int year_day() const;
-    [[nodiscard]] day week_day() const;
+    inline date();
+    inline date( int day , int month , int year );
+    inline date( std::string_view );
+    inline date( std::time_t );
+    [[nodiscard]] inline int month_day() const;
+    [[nodiscard]] inline int month() const;
+    [[nodiscard]] inline int year() const;
+    [[nodiscard]] inline int year_day() const;
+    [[nodiscard]] inline day week_day() const;
 
-    date& set_month_day( int );
-    date& set_month( int );
-    date& set_year( int );
-    date& set( int day , int month , int year );
+    inline date& set_month_day( int );
+    inline date& set_month( int );
+    inline date& set_year( int );
+    inline date& set( int day , int month , int year );
 
-    date  operator+ ( int day ) const;
-    date& operator+=( int day );
-    date  operator- ( int day ) const;
-    date& operator-=( int day );
-    date& operator++();
-    date  operator++( int );
-    date& operator--();
-    date  operator--( int );
+    inline date  operator+ ( int day ) const;
+    inline date& operator+=( int day );
+    inline date  operator- ( int day ) const;
+    inline date& operator-=( int day );
+    inline date& operator++();
+    inline date  operator++( int );
+    inline date& operator--();
+    inline date  operator--( int );
     
     friend bool operator< ( const date& , const date& );
     friend bool operator==( const date& , const date& );
@@ -67,10 +67,10 @@ public:
 
 private:
 
-    [[nodiscard]] static int n_days( int month , int year );
-    [[nodiscard]] static int days_from_0( int year );
-    [[nodiscard]] static int year_from_days( int days );
-    [[nodiscard]] static day anchor_day( int year );
+    [[nodiscard]] static inline int n_days( int month , int year );
+    [[nodiscard]] static inline int days_from_0( int year );
+    [[nodiscard]] static inline int year_from_days( int days );
+    [[nodiscard]] static inline day anchor_day( int year );
     void validate_day( int ) const;
     void validate_month( int ) const;
     void validate_year( int ) const;
@@ -80,7 +80,7 @@ private:
     int m_year;
 };
 
-inline date date::random()
+date date::random()
 {
     using rd_t   = std::random_device;
     using gen_t  = std::mt19937;
@@ -104,13 +104,13 @@ constexpr bool date::is_leap( int year )
            year % 400 == 0;
 }
 
-inline date::date()
+date::date()
     :   m_day   { 1 }
     ,   m_month { 1 }
     ,   m_year  { BASE_YEAR }
 {}
 
-inline date::date( int day , int month , int year )
+date::date( int day , int month , int year )
     :   m_day   { day }
     ,   m_month { month }
     ,   m_year  { year }
@@ -120,7 +120,7 @@ inline date::date( int day , int month , int year )
     validate_month( m_month );
 }
 
-inline date::date( std::string_view v )
+date::date( std::string_view v )
 {
     m_day = stoi(
         std::string { v.substr( 0 , 2 ) }
@@ -186,7 +186,7 @@ int date::year_day() const
     return days;
 }
 
-inline date::day date::week_day() const
+date::day date::week_day() const
 {
     int n_digits { int( std::floor( std::log10( m_year ) ) ) + 1 };
 
@@ -211,7 +211,7 @@ inline date::day date::week_day() const
     );
 }
 
-inline date& date::set_month_day( int day )
+date& date::set_month_day( int day )
 {
     validate_day( day );
 
@@ -220,7 +220,7 @@ inline date& date::set_month_day( int day )
     return *this;
 }
 
-inline date& date::set_month( int month )
+date& date::set_month( int month )
 {
     validate_month( month );
 
@@ -229,7 +229,7 @@ inline date& date::set_month( int month )
     return *this;
 }
 
-inline date& date::set_year( int year )
+date& date::set_year( int year )
 {
     validate_year( year );
 
@@ -238,7 +238,7 @@ inline date& date::set_year( int year )
     return *this;
 }
 
-inline date& date::set( int day , int month , int year )
+date& date::set( int day , int month , int year )
 {
     set_year( year );
     set_month( month );
@@ -247,7 +247,7 @@ inline date& date::set( int day , int month , int year )
     return *this;
 }
 
-inline date date::operator+( int day ) const
+date date::operator+( int day ) const
 {
     if ( !day )
         return *this;
@@ -259,7 +259,7 @@ inline date date::operator+( int day ) const
     return target_date;
 }
 
-inline date& date::operator+=( int day )
+date& date::operator+=( int day )
 {
     if ( !day )
         return *this;
@@ -286,22 +286,22 @@ inline date& date::operator+=( int day )
     return *this;
 }
 
-inline date date::operator-( int day ) const
+date date::operator-( int day ) const
 {
     return operator+( -day );
 }
 
-inline date& date::operator-=( int day )
+date& date::operator-=( int day )
 {
     return operator+=( -day );
 }
 
-inline date& date::operator++()
+date& date::operator++()
 {
     return operator+=( 1 );
 }
 
-inline date date::operator++( int )
+date date::operator++( int )
 {
     date curr { *this };
 
@@ -310,12 +310,12 @@ inline date date::operator++( int )
     return curr;
 }
 
-inline date& date::operator--()
+date& date::operator--()
 {
     return operator-=( 1 );
 }
 
-inline date date::operator--( int )
+date date::operator--( int )
 {
     date curr { *this };
 
@@ -324,7 +324,7 @@ inline date date::operator--( int )
     return curr;
 }
 
-inline int date::n_days( int month , int year )
+int date::n_days( int month , int year )
 {
     assert( month > 0 && month <= 12 );
 
@@ -345,18 +345,18 @@ inline int date::n_days( int month , int year )
     }
 }
 
-inline int date::days_from_0( int year )
+int date::days_from_0( int year )
 {
     year -= 1;
     return year * 365 + year / 400 - year / 100 + year / 4;
 }
 
-inline int date::year_from_days( int days )
+int date::year_from_days( int days )
 {
     return days * 400 / 146097 + 1;
 }
 
-inline date::day date::anchor_day( int year )
+date::day date::anchor_day( int year )
 {
     auto century = ( ( year - 200 ) % 400 / 100 );
 
@@ -371,19 +371,19 @@ inline date::day date::anchor_day( int year )
     assert( false && "Should not reach here" );
 }
 
-inline void date::validate_day( int day ) const
+void date::validate_day( int day ) const
 {
     assert( day  > 0 );
     assert( day  <= n_days( m_month , m_year ) );
 }
 
-inline void date::validate_month( int month ) const
+void date::validate_month( int month ) const
 {
     assert( month > 0 );
     assert( month <= 12 );
 }
 
-inline void date::validate_year( int year ) const
+void date::validate_year( int year ) const
 {
     assert( year  > 1900 );
 }
