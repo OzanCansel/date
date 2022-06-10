@@ -372,6 +372,11 @@ TEST_CASE( "date date::random()" )
     REQUIRE( correct );
 }
 
+TEST_CASE( "date date::days_since_111( int )" )
+{
+    REQUIRE( project::date::days_since_111( 2000 ) == 730119 );
+}
+
 TEST_CASE( "int operator-( const date& , const date& )" )
 {
     using namespace project;

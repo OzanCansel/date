@@ -36,7 +36,7 @@ public:
     };
 
     static inline date random();
-    [[nodiscard]] static inline int days_from_0( int year );
+    [[nodiscard]] static constexpr int days_since_111( int year );
     static constexpr bool is_leap( int year );
 
     inline date();
@@ -269,10 +269,10 @@ date& date::operator+=( int day )
     if ( !day )
         return *this;
 
-    int current_days { days_from_0( m_year ) + year_day() - 1 };
+    int current_days { days_since_111( m_year ) + year_day() - 1 };
     int target_days  { current_days + day };
     int target_year  { year_from_days( target_days ) };
-    int surplus_days { target_days - days_from_0( target_year ) };
+    int surplus_days { target_days - days_since_111( target_year ) };
     int target_month;
 
     for (
@@ -344,7 +344,7 @@ int date::n_days( int month , int year )
     }
 }
 
-int date::days_from_0( int year )
+constexpr int date::days_since_111( int year )
 {
     year -= 1;
     return year * 365 + year / 400 - year / 100 + year / 4;
@@ -427,8 +427,8 @@ void date::validate_year( int year )
 
 [[nodiscard]] inline int operator-( const date& x , const date& y )
 {
-    return ( date::days_from_0( x.year() ) + x.year_day() ) -
-           ( date::days_from_0( y.year() ) + y.year_day() );
+    return ( date::days_since_111( x.year() ) + x.year_day() ) -
+           ( date::days_since_111( y.year() ) + y.year_day() );
 }
 
 [[nodiscard]] inline date operator+( int n , const date& x )
