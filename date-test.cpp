@@ -129,6 +129,7 @@ TEST_CASE( "date date::operator+( int day )" )
 
     date x1  { 1  , 1 , 2000 };
     date x2  { 24 , 8 , 2022 };
+
     date y11 { x1 + 366    };
     date y21 { x1 + 4565   };
     date y31 { x1 + 5      };
@@ -174,6 +175,7 @@ TEST_CASE( "date date::operator-( int day )" )
 
     date x1  { 1  , 1 , 2000 };
     date x2  { 24 , 8 , 2022 };
+
     date y11 { x1 - ( -366   ) };
     date y21 { x1 - ( -4565  ) };
     date y31 { x1 - ( -5     ) };
