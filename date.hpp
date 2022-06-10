@@ -63,7 +63,7 @@ public:
     inline date& operator--();
     inline date  operator--( int );
     
-    friend bool operator< ( const date& , const date& );
+    friend bool operator<( const date& , const date& );
 
 private:
 
