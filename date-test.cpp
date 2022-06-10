@@ -371,3 +371,18 @@ TEST_CASE( "date date::random()" )
 
     REQUIRE( correct );
 }
+
+TEST_CASE( "int operator-( const date& , const date& )" )
+{
+    using namespace project;
+
+    REQUIRE( date { 11 , 4  , 2022 } - date { 1  , 12 , 2000 } == 7801   );
+    REQUIRE( date { 1  , 10 , 2001 } - date { 23 , 5  , 2045 } == -15940 );
+}
+
+TEST_CASE( "date operator+( int n , const date& )" )
+{
+    using namespace project;
+
+    REQUIRE( 5 + date { 1 , 10 , 2000 } == date { 6 , 10 , 2000 } );
+}

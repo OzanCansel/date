@@ -40,8 +40,8 @@ public:
 
     inline date();
     inline date( int day , int month , int year );
-    inline date( std::string_view );
-    inline date( std::time_t );
+    inline explicit date( std::string_view );
+    inline explicit date( std::time_t );
     [[nodiscard]] inline int month_day() const;
     [[nodiscard]] inline int month() const;
     [[nodiscard]] inline int year() const;
@@ -67,11 +67,11 @@ public:
     friend bool operator!=( const date& , const date& );
     friend std::ostream& operator<<( std::ostream& os , const date& );
     friend std::istream& operator>>( std::istream& is ,       date& );
+    [[nodiscard]] static inline int days_from_0( int year );
 
 private:
 
     [[nodiscard]] static inline int n_days( int month , int year );
-    [[nodiscard]] static inline int days_from_0( int year );
     [[nodiscard]] static inline int year_from_days( int days );
     [[nodiscard]] static inline day anchor_day( int year );
     static inline void validate_month( int );
@@ -459,6 +459,17 @@ inline std::istream& operator>>( std::istream& is , date& d )
     d.set_month_day( day );
 
     return is;
+}
+
+inline int operator-( const date& x , const date& y )
+{
+    return ( date::days_from_0( x.year() ) + x.year_day() ) -
+           ( date::days_from_0( y.year() ) + y.year_day() );
+}
+
+inline date operator+( int n , const date& x )
+{
+    return x.operator+( n );
 }
 
 }
