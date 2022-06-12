@@ -187,7 +187,7 @@ int date::year_day() const
 
 date::day date::week_day() const
 {
-    int n_digits { int( std::floor( std::log10( m_year ) ) ) + 1 };
+    int n_digits { int( std::log10( m_year ) ) + 1 };
 
     assert( n_digits >= 2 );
 
@@ -364,7 +364,6 @@ date::day date::dooms_day( int year )
         case 1 : return day::wednesday;
         case 2 : return day::tuesday;
         case 3 : return day::sunday;
-        default: assert( false && "No way to reach here" );
     }
 }
 
