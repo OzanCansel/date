@@ -70,7 +70,7 @@ private:
 
     [[nodiscard]] static inline int n_days( int month , int year );
     [[nodiscard]] static inline int year_from_days( int days );
-    [[nodiscard]] static inline day dooms_day( int year );
+    [[nodiscard]] static inline day anchor_day( int year );
     static inline void validate_month( int );
     static inline void validate_year( int );
     inline void validate_day( int ) const;
@@ -197,7 +197,7 @@ date::day date::week_day() const
     int c3 { c2 / 4 };
 
     day dooms_week_day {
-        ( c1 + c2 + c3 + int( dooms_day( m_year ) ) ) % 7
+        ( c1 + c2 + c3 + int( anchor_day( m_year ) ) ) % 7
     };
     date dooms_day { 4 , 4 , m_year };
 
@@ -354,7 +354,7 @@ int date::year_from_days( int days )
     return days * 400 / 146097 + 1;
 }
 
-date::day date::dooms_day( int year )
+date::day date::anchor_day( int year )
 {
     int century { ( year - 200 ) % 400 / 100 };
 
