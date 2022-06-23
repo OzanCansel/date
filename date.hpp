@@ -133,6 +133,10 @@ date::date( std::string_view v )
     m_year = stoi(
         std::string { v.substr( 6 , 4 ) }
     );
+    
+    validate_year( m_year );
+    validate_day( m_day );
+    validate_month( m_month );
 }
 
 date::date( std::time_t gmt )
