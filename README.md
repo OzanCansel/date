@@ -1,5 +1,4 @@
 # date-naive
-date-naive
 
 Date homework in C++ lecture whose instructor is Necati Ergin.
 
